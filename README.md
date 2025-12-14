@@ -1,9 +1,3 @@
-# Getting Started ⚡️ Bolt for JavaScript
-
-> Slack app example from 📚 [Getting started with Bolt for JavaScript tutorial][1]
-
-## Overview
-
 
 # Debugging Disciples SlackBot
 
@@ -25,11 +19,6 @@ This Slack app is designed for faith-based communities, providing interactive sp
 
 - **Interactive Buttons**
 	- Many responses include interactive Slack buttons for translation switching or engagement.
-
-## Data Storage
-
-- **prayer-requests**: Stores user prayer requests with user ID, text, and timestamp.
-- **Questions**: Stores Bible Q&A with user ID, question, response, and timestamp.
 
 ## Setup
 
