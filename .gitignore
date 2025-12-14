@@ -1,0 +1,4 @@
+# Ignore environment variables file
+.env
+# node / npm
+node_modules/
