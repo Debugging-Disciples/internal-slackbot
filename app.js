@@ -299,7 +299,7 @@ app.action('button_click', async ({ body, ack, say }) => {
 
 (async () => {
   // Start your app
-  await app.start(process.env.PORT || 3000);
+  await app.start();
 
   app.logger.info('⚡️ Bolt app is running!');
 })();
