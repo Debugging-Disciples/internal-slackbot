@@ -1,7 +1,6 @@
 
 # Debugging Disciples SlackBot
 
-This Slack app is designed for faith-based communities, providing interactive spiritual support and Bible study tools directly in Slack. Built with Node.js, Firebase, and Gemini AI.
 
 ## Features
 
