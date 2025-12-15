@@ -54,7 +54,6 @@ app.message('hello', async ({ message, say }) => {
 });
 
 app.message(/^prayer\s*requests$/i, async ({ message, say }) => {
-  console.log('prayer requests listener triggered', message.text);
   try {
     const q = query(
       collection(db, 'prayer-requests'),
@@ -125,8 +124,6 @@ app.message(/^explain:\s*(.+)/i, async ({ message, context, say }) => {
   let fallbackText = 'Sorry, there was an error getting an explanation.';
 
   try {
-    console.log('[Gemini] Prompt:', prompt);
-    const start = Date.now();
 
     const answer = await new Promise((resolve) => {
       const req = https.request(url, options, (res) => {
@@ -136,7 +133,6 @@ app.message(/^explain:\s*(.+)/i, async ({ message, context, say }) => {
         });
         res.on('end', () => {
           try {
-            console.log('[Gemini] Raw response:', data);
             const result = JSON.parse(data);
 
             // handle error payloads gracefully
@@ -165,8 +161,6 @@ app.message(/^explain:\s*(.+)/i, async ({ message, context, say }) => {
       req.end();
     });
 
-    const elapsed = Date.now() - start;
-    console.log(`[Gemini] Response time: ${elapsed}ms`);
 
     if (answer) {
       await say(answer);
@@ -191,9 +185,8 @@ app.message(/^explain:\s*(.+)/i, async ({ message, context, say }) => {
 });
 
 app.message(/^bible:\s*(.+)/i, async ({ message, context, say }) => {
-  console.log('bible: listener triggered', message.text);
   const verse = context.matches[1]?.trim();
-  console.log('Parsed verse string:', verse);
+
   if (!verse) {
     await say('Please provide a verse after "bible:". For example: bible: John 3:16');
     return;
@@ -204,16 +197,14 @@ app.message(/^bible:\s*(.+)/i, async ({ message, context, say }) => {
 
 async function sendBibleVerses({ verse, translation, say, client, channel, messageTs }) {
   const url = `https://bible-api.com/${encodeURIComponent(verse)}?translation=${translation}`;
-  console.log('Final Bible API URL:', url);
   try {
     const res = await fetch(url);
-    console.log('API response status:', res.status);
     if (!res.ok) {
       await say('Sorry, I could not fetch that verse.');
       return;
     }
     const data = await res.json();
-    console.log('API response data:', data);
+
     if (!data.verses || !Array.isArray(data.verses) || data.verses.length === 0) {
       await say('No verses found for that reference.');
       return;
@@ -272,7 +263,6 @@ translations.forEach(t => {
 
 // Listen for messages starting with "pray4me:"
 app.message(/^pray4me:\s*(.+)/i, async ({ message, context, say }) => {
-  console.log('pray4me listener triggered', message.text);
   const prayerText = context.matches[1]?.trim();
   if (!prayerText) {
     await say('Please provide a prayer request after "pray4me:".');
