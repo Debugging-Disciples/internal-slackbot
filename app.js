@@ -1,11 +1,9 @@
 import https from 'https';
 import { query, where, getDocs, orderBy } from 'firebase/firestore';
 import { App } from '@slack/bolt';
-import dotenv from 'dotenv';
 import { db } from './firebase.js';
 import fetch from 'node-fetch';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
-dotenv.config();
 
 const translations = [
   {
