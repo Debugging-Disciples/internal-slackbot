@@ -191,6 +191,11 @@ app.event("team_join", async ({ event, client }) => {
       user: event.user.id,
     });
 
+
+    console.log("Full user profile:", JSON.stringify(userInfo.user.profile, null, 2));
+    console.log("Email found:", userInfo.user.profile.email);
+    console.log("First name:", userInfo.user.profile.first_name);
+
     const email = userInfo.user.profile.email;
     const firstName = userInfo.user.profile.first_name || "there";
     const html = await render(React.createElement(WelcomeEmail, { name: firstName }));
@@ -204,6 +209,8 @@ app.event("team_join", async ({ event, client }) => {
         subject: "Welcome to Debugging Disciples 🙌",
         html: html,
       });
+      console.log("Email sent to:", email);
+
     }
   } catch (error) {
     console.error("Error sending welcome message on team_join:", error);
