@@ -192,7 +192,7 @@ app.event("team_join", async ({ event, client }) => {
 
     const email = userInfo.user.profile.email;
     const firstName = userInfo.user.profile.first_name || "there";
-    const html = await render(<WelcomeEmail name={firstName} />);
+    const html = await render(React.createElement(WelcomeEmail, { name: firstName }));
 
     const resend = new Resend(process.env.RESEND_API_KEY);
 
