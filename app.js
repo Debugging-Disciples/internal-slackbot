@@ -3,7 +3,7 @@ import { query, where, getDocs, orderBy } from "firebase/firestore";
 import { App } from "@slack/bolt";
 import { db } from "./firebase.js";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
-
+import WelcomeEmail from "./welcome-email.js";
 const translations = [
   {
     title: "American Standard Version",
@@ -179,11 +179,29 @@ app.message(/^explain:\s*(.+)/i, async ({ message, context, say }) => {
 
 app.event("team_join", async ({ event, client }) => {
   try {
-    // Send a welcome message to the new user
     await client.chat.postMessage({
       channel: "C06LD5BGUP7",
       text: `Everyone welcome <@${event.user.id}> to the community! 🎉`,
     });
+
+    const userInfo = await client.users.info({
+      user: event.user.id,
+    });
+
+    const email = userInfo.user.profile.email;
+    const firstName = userInfo.user.profile.first_name || "there";
+    const html = await render(<WelcomeEmail name={firstName} />);
+
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
+    if (email) {
+      await resend.emails.send({
+        from: "Debugging Disciples <info@debuggingdisciples.org>",
+        to: email,
+        subject: "Welcome to Debugging Disciples 🙌",
+        html: html,
+      });
+    }
   } catch (error) {
     console.error("Error sending welcome message on team_join:", error);
   }
@@ -236,9 +254,8 @@ async function sendBibleVerses({
     if (data.verses.length > 1) {
       verseRange = `${first.verse}-${last.verse}`;
     }
-    const title = `*${first.book_name} ${
-      first.chapter
-    }:${verseRange} (${translation.toUpperCase()})*`;
+    const title = `*${first.book_name} ${first.chapter
+      }:${verseRange} (${translation.toUpperCase()})*`;
     const versesText = data.verses
       .map((v) => `*${v.verse}*: ${v.text.trim()}`)
       .join("\n");
