@@ -1,4 +1,3 @@
-import "dotenv/config";
 import { Resend } from "resend";
 import fs from "fs";
 import path from "path";
