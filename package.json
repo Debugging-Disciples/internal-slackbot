@@ -9,6 +9,8 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@react-email/components": "^0.0.29",
+    "@react-email/render": "^1.0.2",
     "@slack/bolt": "^4.6.0",
     "firebase": "^12.6.0",
     "react": "^19.2.4",

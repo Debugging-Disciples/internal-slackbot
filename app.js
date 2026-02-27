@@ -3,6 +3,7 @@ import { query, where, getDocs, orderBy } from "firebase/firestore";
 import { App } from "@slack/bolt";
 import { db } from "./firebase.js";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { render } from "@react-email/render";
 import WelcomeEmail from "./welcome-email.js";
 const translations = [
   {
