@@ -5,7 +5,7 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "node app.js"
+    "start": "tsx app.js"
   },
   "license": "MIT",
   "dependencies": {
@@ -15,5 +15,8 @@
     "firebase": "^12.6.0",
     "react": "^19.2.4",
     "resend": "^6.9.2"
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0"
   }
 }
