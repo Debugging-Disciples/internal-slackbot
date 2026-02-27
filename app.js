@@ -4,6 +4,7 @@ import { App } from "@slack/bolt";
 import { db } from "./firebase.js";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { render } from "@react-email/render";
+import { Resend } from "resend";
 import React from "react";
 import WelcomeEmail from "./welcome-email.jsx";
 const translations = [
