@@ -2,7 +2,7 @@ import https from "https";
 import { query, where, getDocs, orderBy } from "firebase/firestore";
 import { App } from "@slack/bolt";
 import { db } from "./firebase.js";
-import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { collection, addDoc, Timestamp, doc, setDoc } from "firebase/firestore";
 import { render } from "@react-email/render";
 import { Resend } from "resend";
 import React from "react";
@@ -182,22 +182,47 @@ app.message(/^explain:\s*(.+)/i, async ({ message, context, say }) => {
 
 app.event("team_join", async ({ event, client }) => {
   try {
-    await client.chat.postMessage({
+    const welcomeMessage = await client.chat.postMessage({
       channel: "C06LD5BGUP7",
       text: `Everyone welcome <@${event.user.id}> to the community! 🎉`,
     });
+
+    try {
+      await client.reactions.add({
+        channel: welcomeMessage.channel,
+        timestamp: welcomeMessage.ts,
+        name: "wave",
+      });
+    } catch (reactionError) {
+      console.error("Could not add :wave: reaction:", reactionError);
+    }
 
     const userInfo = await client.users.info({
       user: event.user.id,
     });
 
 
-    console.log("Full user profile:", JSON.stringify(userInfo.user.profile, null, 2));
     console.log("Email found:", userInfo.user.profile.email);
-    console.log("First name:", userInfo.user.profile.first_name);
 
     const email = userInfo.user.profile.email;
+    const fullName =
+      userInfo.user.profile.real_name ||
+      userInfo.user.real_name ||
+      userInfo.user.name ||
+      "";
     const firstName = userInfo.user.profile.first_name || "there";
+
+    await setDoc(
+      doc(db, "members", event.user.id),
+      {
+        email: email || "",
+        email_preferences: [],
+        fullname: fullName,
+        userid: event.user.id,
+      },
+      { merge: true }
+    );
+
     const html = await render(React.createElement(WelcomeEmail, { name: firstName }));
 
     const resend = new Resend(process.env.RESEND_API_KEY);
