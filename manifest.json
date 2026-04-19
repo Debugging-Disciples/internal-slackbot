@@ -17,6 +17,7 @@
                 "channels:write.invites",
                 "chat:write",
                 "app_mentions:read",
+                "reactions:write",
                 "im:history",
                 "groups:history",
                 "mpim:history"
