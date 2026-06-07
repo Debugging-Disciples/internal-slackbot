@@ -55,7 +55,7 @@ export default function WelcomeEmail({ name }) {
                         </Text>
 
                         <Text style={paragraph}>
-                            We meet Sundays at <strong>5pm EST</strong>. You’re always welcome
+                            We meet Sundays at <strong>5pm PST</strong>. You’re always welcome
                             to jump in.
                         </Text>
 
