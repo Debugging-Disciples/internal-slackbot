@@ -126,6 +126,21 @@ export default function WelcomeEmail({ name }) {
                         </Section>
 
                         <Text style={paragraph}>
+                            Follow us on Instagram for updates, events, and everything
+                            happening in the community.
+                        </Text>
+
+                        <Section style={buttonContainer}>
+                            <a
+                                href="http://instagram.com/debuggingdisciples"
+                                target="_blank"
+                                style={buttonInstagram}
+                            >
+                                Follow Us on Instagram
+                            </a>
+                        </Section>
+
+                        <Text style={paragraph}>
                             Or explore everything happening in the community:
                         </Text>
 
@@ -230,6 +245,15 @@ const button = {
 
 const buttonSecondary = {
     backgroundColor: "#0a66c2",
+    color: "#ffffff",
+    padding: "12px 20px",
+    borderRadius: "6px",
+    textDecoration: "none",
+    fontSize: "14px",
+};
+
+const buttonInstagram = {
+    backgroundColor: "#c13584",
     color: "#ffffff",
     padding: "12px 20px",
     borderRadius: "6px",
